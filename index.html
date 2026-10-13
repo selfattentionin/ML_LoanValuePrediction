@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Risk Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="bg-orb orb-one"></div>
+      <div class="bg-orb orb-two"></div>
+      <div class="bg-orb orb-three"></div>
+
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">S</div>
+          <div>
+            <p class="eyebrow">SelfAttention.in</p>
+            <h1>Loan Risk Predictor</h1>
+          </div>
+        </div>
+        <div class="project-badge">Intern Project Showcase</div>
+      </header>
+
+      <main class="dashboard">
+        <section class="hero-panel panel">
+          <div class="hero-copy">
+            <span class="eyebrow">Project by interns at selfattention.in</span>
+            <h2>Predict customer risk before approving the loan.</h2>
+            <p>
+              This interactive machine learning prototype was built as part of the internship
+              program at SelfAttention and demonstrates how a loan-risk model can be exported to
+              ONNX and deployed on a modern GitHub Pages interface.
+            </p>
+          </div>
+          <div class="stat-grid">
+            <div class="mini-stat">
+              <span class="label">Model Format</span>
+              <strong>ONNX</strong>
+            </div>
+            <div class="mini-stat">
+              <span class="label">Deployment</span>
+              <strong>GitHub Pages</strong>
+            </div>
+            <div class="mini-stat">
+              <span class="label">Visual Style</span>
+              <strong>Animated UI</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-panel panel">
+          <div class="panel-head">
+            <h3>Customer profile</h3>
+            <span class="status-pill" id="modelStatus">Loading model…</span>
+          </div>
+
+          <form id="loanForm">
+            <div class="field-grid">
+              <label>
+                <span>Income</span>
+                <input type="number" id="Income" name="Income" value="500000" min="0" step="1000" />
+              </label>
+
+              <label>
+                <span>Age</span>
+                <input type="number" id="Age" name="Age" value="35" min="18" max="90" />
+              </label>
+
+              <label>
+                <span>Experience</span>
+                <input type="number" id="Experience" name="Experience" value="7" min="0" max="50" />
+              </label>
+
+              <label>
+                <span>Current Job Years</span>
+                <input type="number" id="CURRENT_JOB_YRS" name="CURRENT_JOB_YRS" value="5" min="0" max="50" />
+              </label>
+
+              <label>
+                <span>Current House Years</span>
+                <input type="number" id="CURRENT_HOUSE_YRS" name="CURRENT_HOUSE_YRS" value="9" min="0" max="60" />
+              </label>
+
+              <label>
+                <span>Married</span>
+                <select id="Married" name="Married">
+                  <option value="single">single</option>
+                  <option value="married" selected>married</option>
+                </select>
+              </label>
+
+              <label>
+                <span>House Ownership</span>
+                <select id="House_Ownership" name="House_Ownership">
+                  <option value="rented" selected>rented</option>
+                  <option value="owned">owned</option>
+                  <option value="norent_noown">norent_noown</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Car Ownership</span>
+                <select id="Car_Ownership" name="Car_Ownership">
+                  <option value="no" selected>no</option>
+                  <option value="yes">yes</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Profession</span>
+                <select id="Profession" name="Profession">
+                  <option value="Software_Developer" selected>Software_Developer</option>
+                  <option value="Mechanical_engineer">Mechanical_engineer</option>
+                  <option value="Civil_servant">Civil_servant</option>
+                  <option value="Doctor">Doctor</option>
+                  <option value="Teacher">Teacher</option>
+                  <option value="Designer">Designer</option>
+                  <option value="Economist">Economist</option>
+                  <option value="Lawyer">Lawyer</option>
+                  <option value="Architect">Architect</option>
+                  <option value="Analyst">Analyst</option>
+                  <option value="Flight_attendant">Flight_attendant</option>
+                  <option value="Politician">Politician</option>
+                  <option value="Police_officer">Police_officer</option>
+                </select>
+              </label>
+
+              <label>
+                <span>City</span>
+                <select id="CITY" name="CITY">
+                  <option value="Bhubaneswar" selected>Bhubaneswar</option>
+                  <option value="Rewa">Rewa</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Pune">Pune</option>
+                  <option value="Jaipur">Jaipur</option>
+                  <option value="Kolkata">Kolkata</option>
+                </select>
+              </label>
+
+              <label>
+                <span>State</span>
+                <select id="STATE" name="STATE">
+                  <option value="Odisha" selected>Odisha</option>
+                  <option value="Madhya_Pradesh">Madhya_Pradesh</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Telangana">Telangana</option>
+                  <option value="Tamil_Nadu">Tamil_Nadu</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="West_Bengal">West_Bengal</option>
+                </select>
+              </label>
+            </div>
+
+            <button type="submit" class="predict-btn">Predict Risk</button>
+          </form>
+        </section>
+
+        <aside class="result-panel panel">
+          <div class="gauge-wrap">
+            <div class="ring">
+              <div class="score-core">
+                <span id="riskScore">--</span>
+                <small>% Risk</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-body">
+            <p class="label">Prediction</p>
+            <h3 id="predictionText">Awaiting input</h3>
+            <div class="bar-track">
+              <div id="riskBar" class="bar-fill"></div>
+            </div>
+
+            <div class="loan-value-box">
+              <span class="label">Estimated Loan Value</span>
+              <strong id="loanValueAmount">₹ 0</strong>
+              <small id="loanValueHint">Waiting for customer profile</small>
+            </div>
+
+            <p id="reasonText" class="reason-text">
+              Complete the form and run the prediction to evaluate customer loan risk.
+            </p>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <div class="watermark">selfattention.in</div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

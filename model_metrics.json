@@ -1,0 +1,13 @@
+{
+  "risk_model": {
+    "accuracy": 0.782,
+    "precision": 0.3144,
+    "recall": 0.6538,
+    "f1": 0.4246,
+    "roc_auc": 0.8064
+  },
+  "loan_value_model": {
+    "mae": 99509.19,
+    "r2": 0.9528
+  }
+}
